@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private Bitmap selectedBitmap;
     private HomeController controller;
     private ArrayList<String> filesName;
-    private Button select, save;
+    private Button select, save,newImage;
     private Bitmap newBitmap;
     private ProgressBar progress;
     private String currentFile;
@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         select = findViewById(R.id.select);
         save = findViewById(R.id.save);
         progress = findViewById(R.id.progress);
+        newImage = findViewById(R.id.new_image);
         onClick();
         ImagePicker.setMinQuality(600, 600);
         new Thread(new Runnable() {
@@ -101,6 +102,14 @@ public class MainActivity extends AppCompatActivity {
                 myImage.setImageBitmap(newBitmap);
             }
         });
+        newImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                newImage.setVisibility(View.INVISIBLE);
+                save.setVisibility(View.INVISIBLE);
+                myImage.setImageBitmap(null);
+            }
+        });
     }
 
     @Override
@@ -114,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
             myImage.setImageBitmap(newBitmap);
             seekBar.setVisibility(View.VISIBLE);
             save.setVisibility(View.VISIBLE);
+            newImage.setVisibility(View.VISIBLE);
         }
 
     }

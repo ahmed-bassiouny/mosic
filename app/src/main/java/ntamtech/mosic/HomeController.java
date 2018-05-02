@@ -55,9 +55,9 @@ public class HomeController {
         canvas = new Canvas(result);
         alphaPaint = new Paint();
         alphaPaint.setAlpha(alpha);
-        canvas.drawBitmap(src, 0, 0, alphaPaint);
+        canvas.drawBitmap(src, 0, 0, null);
 
-        canvas.drawBitmap(imageFromDevice, 0, 0, null);
+        canvas.drawBitmap(imageFromDevice, 0, 0, alphaPaint);
         return result;
     }
 
