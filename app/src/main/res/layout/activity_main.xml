@@ -8,7 +8,15 @@
 
 
     <ImageView
-        android:id="@+id/imageviewTest"
+        android:id="@+id/image_1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:layout_above="@+id/seek_bar"
+        android:layout_margin="10dp" />
+
+    <ImageView
+        android:id="@+id/image_2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitXY"
@@ -21,9 +29,9 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/contain_btn"
         android:layout_centerHorizontal="true"
-        android:max="300"
+        android:max="100"
         android:min="0"
-        android:progress="150"
+        android:progress="1"
         android:visibility="invisible" />
 
     <ProgressBar

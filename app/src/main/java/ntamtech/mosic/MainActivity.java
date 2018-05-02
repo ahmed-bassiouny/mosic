@@ -24,9 +24,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    ImageView myImage;
+    private ImageView image1,image2;
     SeekBar seekBar;
-    private Bitmap selectedBitmap;
+    private Bitmap selectedBitmap,randomBitmap;
     private HomeController controller;
     private ArrayList<String> filesName;
     private Button select, save,newImage;
@@ -39,7 +39,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        myImage = findViewById(R.id.imageviewTest);
+        image1 = findViewById(R.id.image_1);
+        image2 = findViewById(R.id.image_2);
         seekBar = findViewById(R.id.seek_bar);
         select = findViewById(R.id.select);
         save = findViewById(R.id.save);
@@ -98,16 +99,19 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                newBitmap = getController().addWaterMark(selectedBitmap, getController().getBitmapFromStringPath(currentFile), seekBar.getProgress());
-                myImage.setImageBitmap(newBitmap);
+                Toast.makeText(MainActivity.this, image2.getImageAlpha()+"", Toast.LENGTH_SHORT).show();
+                //image2.setImageAlpha();
+                //image2.setImageAlpha(seekBar.getProgress());
+               /* newBitmap = getController().addWaterMark(selectedBitmap, getController().getBitmapFromStringPath(currentFile), seekBar.getProgress());
+                myImage.setImageBitmap(newBitmap);*/
             }
         });
         newImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                newImage.setVisibility(View.INVISIBLE);
+                /*newImage.setVisibility(View.INVISIBLE);
                 save.setVisibility(View.INVISIBLE);
-                myImage.setImageBitmap(null);
+                myImage.setImageBitmap(null);*/
             }
         });
     }
@@ -119,8 +123,11 @@ public class MainActivity extends AppCompatActivity {
             this.selectedBitmap = bitmap;
             currentIndex = getController().randomElement(filesName);
             currentFile = filesName.get(currentIndex);
-            newBitmap = getController().addWaterMark(selectedBitmap, getController().getBitmapFromStringPath(currentFile), seekBar.getProgress());
-            myImage.setImageBitmap(newBitmap);
+            randomBitmap = getController().getBitmapFromStringPath(currentFile);
+            //newBitmap = getController().addWaterMark(selectedBitmap, getController().getBitmapFromStringPath(currentFile), seekBar.getProgress());
+            //myImage.setImageBitmap(newBitmap);
+            image1.setImageBitmap(selectedBitmap);
+            image2.setImageBitmap(randomBitmap);
             seekBar.setVisibility(View.VISIBLE);
             save.setVisibility(View.VISIBLE);
             newImage.setVisibility(View.VISIBLE);
