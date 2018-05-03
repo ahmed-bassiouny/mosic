@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 getController().deleteImage(currentFile);
                 filesName.remove(currentIndex);
                 Toast.makeText(MainActivity.this, "Saved", Toast.LENGTH_SHORT).show();
-                getController().doPhotoPrint(newBitmap);
+                //getController().doPhotoPrint(newBitmap);
             }
         });
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
