@@ -8,7 +8,7 @@
 
 
     <ImageView
-        android:id="@+id/image_1"
+        android:id="@+id/image_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/seek_bar"
@@ -16,7 +16,7 @@
         android:scaleType="fitXY" />
 
     <ImageView
-        android:id="@+id/image_2"
+        android:id="@+id/image_foreground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/seek_bar"
@@ -38,6 +38,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tv_percentage"
+        android:text="40%"
+        android:visibility="invisible"
         android:layout_above="@+id/contain_btn"
         android:layout_toEndOf="@+id/seek_bar"/>
 

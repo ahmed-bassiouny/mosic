@@ -2,11 +2,7 @@ package ntamtech.mosic;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
-import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -19,14 +15,10 @@ import android.widget.Toast;
 
 import com.mvc.imagepicker.ImagePicker;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    private ImageView image1, image2;
+    private ImageView imageBackground, imageForeground;
     private TextView tvPercentage;
     SeekBar seekBar;
     private Bitmap selectedBitmap, randomBitmap;
@@ -37,13 +29,14 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar progress;
     private String currentFile;
     private int currentIndex;
+    private final int defaultAlpha = 102;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        image1 = findViewById(R.id.image_1);
-        image2 = findViewById(R.id.image_2);
+        imageBackground = findViewById(R.id.image_background);
+        imageForeground = findViewById(R.id.image_foreground);
         seekBar = findViewById(R.id.seek_bar);
         select = findViewById(R.id.select);
         save = findViewById(R.id.save);
@@ -81,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                newBitmap = getController().addWaterMark(((BitmapDrawable)image1.getDrawable()).getBitmap(),((BitmapDrawable)image2.getDrawable()).getBitmap(),image2.getImageAlpha());
+                newBitmap = getController().addWaterMark(((BitmapDrawable) imageBackground.getDrawable()).getBitmap(),((BitmapDrawable)imageForeground.getDrawable()).getBitmap(),imageForeground.getImageAlpha());
                 getController().saveNewImage(newBitmap, currentFile);
                 getController().deleteImage(currentFile);
                 filesName.remove(currentIndex);
@@ -103,18 +96,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 tvPercentage.setText(seekBar.getProgress() + "%");
-                //image2.setImageAlpha();
-                image2.setImageAlpha((seekBar.getProgress() * 255) / 100);
-               /* newBitmap = getController().addWaterMark(selectedBitmap, getController().getBitmapFromStringPath(currentFile), seekBar.getProgress());
-                myImage.setImageBitmap(newBitmap);*/
+                imageForeground.setImageAlpha((seekBar.getProgress() * 255) / 100);
             }
         });
         newImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*newImage.setVisibility(View.INVISIBLE);
+                newImage.setVisibility(View.INVISIBLE);
                 save.setVisibility(View.INVISIBLE);
-                myImage.setImageBitmap(null);*/
+                imageForeground.setImageBitmap(null);
+                imageBackground.setImageBitmap(null);
             }
         });
     }
@@ -127,15 +118,13 @@ public class MainActivity extends AppCompatActivity {
             currentIndex = getController().randomElement(filesName);
             currentFile = filesName.get(currentIndex);
             randomBitmap = getController().getBitmapFromStringPath(currentFile);
-            //newBitmap = getController().addWaterMark(selectedBitmap, getController().getBitmapFromStringPath(currentFile), seekBar.getProgress());
-            //myImage.setImageBitmap(newBitmap);
-            image1.setImageBitmap(selectedBitmap);
-            image2.setImageBitmap(randomBitmap);
-            image2.setImageAlpha(102);
+            imageBackground.setImageBitmap(selectedBitmap);
+            imageForeground.setImageBitmap(randomBitmap);
+            imageForeground.setImageAlpha(defaultAlpha);
             seekBar.setVisibility(View.VISIBLE);
             save.setVisibility(View.VISIBLE);
             newImage.setVisibility(View.VISIBLE);
-            tvPercentage.setText("40%");
+            tvPercentage.setVisibility(View.VISIBLE);
         }
 
     }
