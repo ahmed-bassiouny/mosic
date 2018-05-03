@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.os.Environment;
 import android.support.v4.print.PrintHelper;
@@ -28,7 +29,6 @@ public class HomeController {
     private String editedPath = mosicPath+"Edited/";
     private Activity activity;
     private Canvas canvas;
-    private Paint alphaPaint;
 
     public HomeController(Activity activity) {
         this.activity = activity;
@@ -47,18 +47,35 @@ public class HomeController {
         }
     }
 
-    public Bitmap addWaterMark(Bitmap src, Bitmap imageFromDevice, int alpha) {
+    public Bitmap addWaterMark(Bitmap src, Bitmap imageFromDevice,int alpha) {
 
         int w = src.getWidth();
         int h = src.getHeight();
         Bitmap result = Bitmap.createBitmap(w, h, src.getConfig());
         canvas = new Canvas(result);
-        alphaPaint = new Paint();
-        alphaPaint.setAlpha(alpha);
-        canvas.drawBitmap(src, 0, 0, null);
+        Paint p = new Paint();
+        p.setAlpha(alpha);
+        canvas.drawBitmap(src, 0, 0,null );
 
-        canvas.drawBitmap(imageFromDevice, 0, 0, alphaPaint);
+        canvas.drawBitmap(getResizedBitmap(imageFromDevice,w,h), 0, 0, p);
         return result;
+    }
+
+    public Bitmap getResizedBitmap(Bitmap bm, int newWidth, int newHeight) {
+        int width = bm.getWidth();
+        int height = bm.getHeight();
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+        // CREATE A MATRIX FOR THE MANIPULATION
+        Matrix matrix = new Matrix();
+        // RESIZE THE BIT MAP
+        matrix.postScale(scaleWidth, scaleHeight);
+
+        // "RECREATE" THE NEW BITMAP
+        Bitmap resizedBitmap = Bitmap.createBitmap(
+                bm, 0, 0, width, height, matrix, false);
+        bm.recycle();
+        return resizedBitmap;
     }
 
     public Bitmap getBitmapFromStringPath(String fileName) {
