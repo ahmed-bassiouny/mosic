@@ -53,11 +53,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         progress.setVisibility(View.GONE);
-                        if (filesName.size() == 0) {
-                            Toast.makeText(MainActivity.this, "no image found", Toast.LENGTH_SHORT).show();
-                        } else {
-                            select.setVisibility(View.VISIBLE);
-                        }
+                        checkAvailableImage();
                     }
                 });
             }
@@ -79,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 getController().deleteImage(currentFile);
                 filesName.remove(currentIndex);
                 Toast.makeText(MainActivity.this, "Saved", Toast.LENGTH_SHORT).show();
+                newImage.performClick();
                 //getController().doPhotoPrint(newBitmap);
             }
         });
@@ -104,10 +101,22 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 newImage.setVisibility(View.INVISIBLE);
                 save.setVisibility(View.INVISIBLE);
+                seekBar.setVisibility(View.INVISIBLE);
+                tvPercentage.setVisibility(View.INVISIBLE);
                 imageForeground.setImageBitmap(null);
                 imageBackground.setImageBitmap(null);
+                checkAvailableImage();
             }
         });
+    }
+
+    private void checkAvailableImage(){
+        if(filesName.size() == 0){
+            select.setVisibility(View.INVISIBLE);
+            Toast.makeText(this, "No Image Found", Toast.LENGTH_SHORT).show();
+        }else {
+            select.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -122,11 +131,11 @@ public class MainActivity extends AppCompatActivity {
             imageForeground.setImageBitmap(randomBitmap);
             imageForeground.setImageAlpha(defaultAlpha);
             seekBar.setVisibility(View.VISIBLE);
+            tvPercentage.setVisibility(View.VISIBLE);
             save.setVisibility(View.VISIBLE);
             newImage.setVisibility(View.VISIBLE);
             tvPercentage.setVisibility(View.VISIBLE);
         }
-
     }
 
     private HomeController getController() {

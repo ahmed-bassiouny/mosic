@@ -26,4 +26,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.github.Mariovc:ImagePicker:1.2.0'
+    implementation 'com.github.zomato:androidphotofilters:1.0.1'
+
 }
