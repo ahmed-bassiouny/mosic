@@ -56,7 +56,7 @@ public class HomeController {
         Paint p = new Paint();
         p.setAlpha(alpha);
         canvas.drawBitmap(src, 0, 0,null );
-        canvas.drawBitmap(getResizedBitmap(imageFromDevice,w,h), 0, 0, p);
+        canvas.drawBitmap(imageFromDevice, 0, 0, p);
         return result;
     }
 
