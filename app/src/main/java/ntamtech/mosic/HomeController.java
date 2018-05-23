@@ -8,6 +8,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.os.Environment;
 import android.support.v4.print.PrintHelper;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -47,16 +48,16 @@ public class HomeController {
         }
     }
 
-    public Bitmap addWaterMark(Bitmap src, Bitmap imageFromDevice,int alpha) {
+    public Bitmap addWaterMark(Bitmap background, Bitmap foreground,int alpha) {
 
-        int w = src.getWidth();
-        int h = src.getHeight();
-        Bitmap result = Bitmap.createBitmap(w, h, src.getConfig());
+        int w = foreground.getWidth();
+        int h = foreground.getHeight();
+        Bitmap result = Bitmap.createBitmap(w, h, foreground.getConfig());
         canvas = new Canvas(result);
         Paint p = new Paint();
         p.setAlpha(alpha);
-        canvas.drawBitmap(src, 0, 0,null );
-        canvas.drawBitmap(imageFromDevice, 0, 0, p);
+        canvas.drawBitmap(getResizedBitmap(background,w,h), 0, 0,null );
+        canvas.drawBitmap(foreground, 0, 0, p);
         return result;
     }
 
